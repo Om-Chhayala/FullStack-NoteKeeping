@@ -6,5 +6,16 @@ const userschema = new mongoose.Schema({
     password: String,
 });
 
+const noteschema = new mongoose.Schema({
+    userid : String,
+    title : String,
+    links:[String],
+    description:String,
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
+})
+
+const Note = mongoose.model("Note" , noteschema);
+
 const User = mongoose.model("User" , userschema);
-module.exports = {  User };
+module.exports = {  User,Note };
