@@ -7,20 +7,20 @@ export const TopBar = ({ notes, setFilteredNotes }) => {
   const [filteredProperties, setFilteredProperties] = useState([]);
   const[allNotes , setNotes] = useState([]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const filtered = allNotes.filter((item) => {
+  //   const filtered = allNotes.filter((item) => {
 
-      const lowercaseTitle = item.title ? item.title.toLowerCase() : '';
-      const lowercaseSearchValue = searchValue ? searchValue.toLowerCase() : ''; 
-      return (lowercaseTitle.includes(lowercaseSearchValue))
-    });
-    setFilteredProperties(filtered);
-  }, [searchValue, allNotes]);
+  //     const lowercaseTitle = item.title ? item.title.toLowerCase() : '';
+  //     const lowercaseSearchValue = searchValue ? searchValue.toLowerCase() : ''; 
+  //     return (lowercaseTitle.includes(lowercaseSearchValue))
+  //   });
+  //   setFilteredProperties(filtered);
+  // }, [searchValue, allNotes]);
 
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
+  // const handleSearchChange = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
 
   return (
     <div className="top-bar">
@@ -32,7 +32,7 @@ export const TopBar = ({ notes, setFilteredNotes }) => {
           type="text"
           placeholder="Search notes"
           value={searchValue}
-          onChange={handleSearchChange}
+          // onChange={handleSearchChange}
         />
       </div>
       <div className="filter">

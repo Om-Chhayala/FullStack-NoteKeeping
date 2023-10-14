@@ -14,7 +14,7 @@ export function HomePage() {
 
 
   return <>
-    <TopBar notes={notes} setFilteredNotes={setFilteredNotes}/>
+    <TopBar/>
     <div className="homepage">
       {!isCreateNoteOpen ? (
         <>
@@ -34,9 +34,9 @@ export function HomePage() {
       )}
 
 <div>
-        {filteredNotes.map((note) => (
+        {/* {filteredNotes.map((note) => (
           <div key={note.id}>{note.title}</div>
-        ))}
+        ))} */}
       </div>
     </div>
     </>
