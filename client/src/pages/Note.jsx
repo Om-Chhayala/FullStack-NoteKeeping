@@ -5,5 +5,3 @@ export const Note = () => {
     <div>Note</div>
   )
 }
-
-// export default Note
