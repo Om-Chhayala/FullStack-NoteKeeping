@@ -40,7 +40,7 @@ router.delete('/deletenote/:noteId', authenticateJwt, async (req,res) => {
 
     if(!note) {
         return res.status(404).json({
-            message : 'Note noe found'
+            message : 'Note not found'
         });
     }
 
@@ -50,5 +50,24 @@ router.delete('/deletenote/:noteId', authenticateJwt, async (req,res) => {
     });
 
 });
+
+
+router.put('/notes/:noteId', async (req, res) => {
+    try {
+      const noteId = req.params.noteId;
+      const updatedData = req.body; 
+
+      const updatedNote = await Note.findByIdAndUpdate(noteId, updatedData, { new: true });
+  
+      if (!updatedNote) {
+        return res.status(404).json({ message: 'Note not found' });
+      }
+      res.json(updatedNote);
+    } catch (error) {
+      console.error('Error updating note:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
 
 module.exports = router;

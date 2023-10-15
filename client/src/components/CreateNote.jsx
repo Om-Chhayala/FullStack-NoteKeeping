@@ -1,12 +1,40 @@
 import React, { useState , useRef, useMemo} from 'react';
 import { Typography, TextField, Button } from "@mui/material";
 import "../styles/createnote.css";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; 
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+const modules = {
+  toolbar : [
+    [{ header : [1 , 2 ,3  , 4 , 5 , 6 , false],}],
+    [{font : []}],
+    [{size : []}],
+    ["bold" , "underline" , "italic" , "strike" , "blockquote"],
+    [{ 'color': [ "red" , "yellow"] }], // Text color
+      [{ 'background': [] }], // Background color
+    [
+      {list : "ordered"},
+      {list : "bullet"},
+      {indent : "-1"},
+      {list : "+1"},
+    ],
+    ["link" , "video" , "image"],
+  ]
+}
+
+const formats = [
+  'bold', 'italic', 'underline', 'strike',
+  'color',
+  'background',
+];
+
 export const CreateNote = () => {
   const navigate = useNavigate();
+  const[value , setValue] = useState('');
  const editor = useRef(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -21,7 +49,7 @@ export const CreateNote = () => {
 
   const handleEditorChange = (content) => {
     // Strip HTML tags from the content
-    const plainText = stripHTML(content);
+    const plainText = JSON.stringify(content);
     console.log(plainText)
     setDescription(plainText);
   };
@@ -29,9 +57,8 @@ export const CreateNote = () => {
 
 
 
-
-  return (
-    <div className="create-note">
+  return ( 
+  <div className="create-note">
       <div className="note-input">
         <TextField
           value={title}
@@ -46,11 +73,22 @@ export const CreateNote = () => {
       </div>
       <div className="note-input">
 
+  <ReactQuill
+  theme='snow'
+  value={description}
+  // onChange={setDescription}
+  onChange={(e)=>{
+    setDescription(e).target.value;
+  }}
+  modules={modules}
+  formats={formats}
+  />
 
-<JoditEditor
+
+{/* <JoditEditor
   ref={editor}
 onChange={handleEditorChange}
-/>
+/> */}
 
 
       </div>
