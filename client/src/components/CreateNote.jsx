@@ -3,9 +3,10 @@ import { Typography, TextField, Button } from "@mui/material";
 import "../styles/createnote.css";
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateNote = () => {
-
+  const navigate = useNavigate();
  const editor = useRef(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -78,6 +79,7 @@ onChange={handleEditorChange}
             }
         });
         alert("Note added!");
+        navigate('/');
     }}
       > Submit </Button>
     </div>
