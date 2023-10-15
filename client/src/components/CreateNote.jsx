@@ -3,9 +3,10 @@ import { Typography, TextField, Button } from "@mui/material";
 import "../styles/createnote.css";
 import JoditEditor from 'jodit-react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const CreateNote = () => {
-
+  const navigate = useNavigate();
  const editor = useRef(null);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -66,7 +67,21 @@ onChange={handleEditorChange}
         />
       </div>
 
-      <Button> Submit </Button>
+      <Button
+      onClick={async () => {
+        await axios.post('http://localhost:8000/user/addnote', {
+                title: title,
+                description: description,
+                link : link
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        });
+        alert("Note added!");
+        navigate('/');
+    }}
+      > Submit </Button>
     </div>
   );
 };

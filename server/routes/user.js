@@ -26,7 +26,7 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
 
 router.get('/allnote', authenticateJwt, async (req, res) => {
     const allnotes = await Note.find({ userid : req.user.id });
-    res.json({ 
+    res.status(200).json({ 
         message : 'all message retrive successfully',
         allnotes
     });
