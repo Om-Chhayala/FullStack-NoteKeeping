@@ -2,10 +2,10 @@
     position: fixed;
     bottom: 20px; /* Adjust the distance from the bottom as needed */
     right: 20px; /* Adjust the distance from the right as needed */
-    z-index: 1000;
-    height: 50;
-    width: 50; 
     background-color: yellow;
+    border-radius: 35%;
+    padding: 25px;
+    border: 0cap;
 }
 .span div{
     justify-content: center;
