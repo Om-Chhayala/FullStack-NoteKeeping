@@ -8,6 +8,8 @@ import {Note} from './pages/Note';
 import {TopBar} from './components/TopBar'
 import SignUp from './pages/SignUp';
 import { Login } from './pages/Login';
+import Notes from './pages/Notes';
+import { CreateNote } from './components/CreateNote';
 // import CreateNote from './components/CreateNote';
 
 
@@ -23,6 +25,7 @@ function App() {
             {/* <TopBar /> */}
             <Routes>
                 <Route path={"/"} element={<HomePage />} />
+                <Route path={"/createnote"} element={<CreateNote />} />
                 <Route path={"/note/:id"} element={<Note />} />
                 <Route path={"/signup"} element={<SignUp />} />
                 <Route path={"/login"} element={<Login />} />

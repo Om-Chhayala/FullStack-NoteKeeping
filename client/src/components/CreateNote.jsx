@@ -66,7 +66,20 @@ onChange={handleEditorChange}
         />
       </div>
 
-      <Button> Submit </Button>
+      <Button
+      onClick={async () => {
+        await axios.post('http://localhost:8000/user/addnote', {
+                title: title,
+                description: description,
+                link : link
+        }, {
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        });
+        alert("Note added!");
+    }}
+      > Submit </Button>
     </div>
   );
 };
