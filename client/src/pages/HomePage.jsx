@@ -7,7 +7,7 @@ import Notes, { Note } from './Notes';
 import { useNavigate } from 'react-router-dom';
 
 export function HomePage() {
-  const [filteredNotes, setFilteredNotes] = useState([]); 
+  // const [filteredNotes, setFilteredNotes] = useState([]); 
   const navigate = useNavigate();
 
   const [notes, setNotes] = useState([]); // Initialize notes state
@@ -30,12 +30,12 @@ export function HomePage() {
     fetchNotes(); // Fetch notes when the component mounts
   }, []);
 
-  
-  const isUserLoggedIn = localStorage.getItem('token')
+  // Check if the user is logged in
+  const isUserLoggedIn = localStorage.getItem('token');
 
   return (
     <>
-      <TopBar notes={notes} setFilteredNotes={setFilteredNotes} />
+      <TopBar notes={notes} />
       <Notes />
       <div className="homepage">
         {isUserLoggedIn ? (  // Conditional rendering of the "+" button
