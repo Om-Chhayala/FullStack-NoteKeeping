@@ -1,9 +1,44 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
 import '../styles/topbar.css';
+import axios from 'axios';
 
-export const TopBar = ({ notes, setFilteredNotes }) => {
+
+
+export const TopBar = ({  setFilteredNotes }) => {
+
   const [searchValue, setSearchValue] = useState('');
+  const [sortOption, setSortOption] = useState('recent');
+
+  // useEffect(() => {
+  //   const fetchAndSortNotes = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8000/user/allnote', {
+  //         params: {
+  //           sortOption: sortOption === 'recent' ? 'Most-Recent' : 'Oldest',
+  //         },
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //         },
+  //       });
+
+  //       if (response.status === 200 && Array.isArray(response.data.notes)) {
+  //         const sortedNotes = response.data.notes;
+  //         setFilteredNotes(sortedNotes);
+  //       } else {
+  //         console.error('API response is not valid:', response);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching notes:', error);
+  //     }
+  //   };
+
+  //   fetchAndSortNotes();
+  // }, [sortOption, setFilteredNotes]);
+
+  const handleSortChange = (e) => {
+    setSortOption(e.target.value);
+  };
 
   return (
     <div className="top-bar">
@@ -14,14 +49,14 @@ export const TopBar = ({ notes, setFilteredNotes }) => {
       <input
           type="text"
           placeholder="Search notes"
-          value={searchValue}
+          // value={}
           // onChange={handleSearchChange}
         />
       </div>
       <div className="filter">
-        <label>Sort by :</label>
-        <select>
-          <option value="recent">Most Recent</option>
+      <label>Sort by :</label>
+        <select value={sortOption} onChange={handleSortChange}>
+          <option value="recent">Most-Recent</option>
           <option value="oldest">Oldest</option>
         </select>
       </div>
