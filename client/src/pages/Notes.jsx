@@ -40,9 +40,9 @@ function Notes() {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" , marginTop : "13px",paddingBottom: "20px"}}>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginTop: "13px", paddingBottom: "20px" }}>
       {notes.map((note) => (
-        <Note key={note._id} note={note} onDelete={deleteNote} /> 
+        <Note key={note._id} note={note} onDelete={deleteNote} />
       ))}
     </div>
   );
@@ -50,7 +50,7 @@ function Notes() {
 
 
 
-export function Note({ note , onDelete}) {
+export function Note({ note, onDelete }) {
   const sanitizedContent = DOMPurify.sanitize(note.description);
   const navigate = useNavigate();
 
@@ -69,7 +69,7 @@ export function Note({ note , onDelete}) {
         headers: headers,
       });
       onDelete(note._id);
-      
+
 
     } catch (error) {
       console.error('Error deleting note:', error);
@@ -79,13 +79,13 @@ export function Note({ note , onDelete}) {
 
   return (<>
     <Card style={{
-      
-      display:"flex",
-      flexDirection:"column",
-      justifyContent:"space-between",
+
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
       margin: 10,
       width: 300,
-      height:200,
+      height: 200,
       padding: 20,
       border: '1px solid #d0d0d0', // Add a border
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Add a shadow
@@ -96,36 +96,43 @@ export function Note({ note , onDelete}) {
         style={{ marginTop: 35, overflow: "hidden" }}
         dangerouslySetInnerHTML={{ __html: sanitizedContent }}
       />
-  
+
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 20 }}>
-        <Button 
-        variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }
-      }
-      onClick={() => {
-        navigate("/notes/" + note._id);
-      }}
-      >
+        <Button variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }}
+        onClick={() => {
+          navigate("/readnote/" + note._id);
+        }}
+        >
+          open
+        </Button>
+        <Button
+          variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }
+          }
+          onClick={() => {
+            navigate("/notes/" + note._id);
+          }}
+        >
           update
         </Button>
-        <Button 
-        variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }
-      }
+        <Button
+          variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }
+          }
 
-      onClick={() => {
-        handleDelete()
-      }}
-      >
+          onClick={() => {
+            handleDelete()
+          }}
+        >
           delete
         </Button>
       </div>
     </Card>
-    
-    </>
-    
+
+  </>
+
   );
-  
-  
-  
+
+
+
 }
 
 export default Notes;
