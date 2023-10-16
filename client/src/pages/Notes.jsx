@@ -105,7 +105,7 @@ export function Note({ note , onDelete}) {
         navigate("/notes/" + note._id);
       }}
       >
-          open
+          update
         </Button>
         <Button 
         variant="contained" size="small" style={{ backgroundColor: 'yellow', color: 'black' }

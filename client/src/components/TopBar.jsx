@@ -4,23 +4,6 @@ import '../styles/topbar.css';
 
 export const TopBar = ({ notes, setFilteredNotes }) => {
   const [searchValue, setSearchValue] = useState('');
-  const [filteredProperties, setFilteredProperties] = useState([]);
-  const[allNotes , setNotes] = useState([]);
-
-  // useEffect(() => {
-
-  //   const filtered = allNotes.filter((item) => {
-
-  //     const lowercaseTitle = item.title ? item.title.toLowerCase() : '';
-  //     const lowercaseSearchValue = searchValue ? searchValue.toLowerCase() : ''; 
-  //     return (lowercaseTitle.includes(lowercaseSearchValue))
-  //   });
-  //   setFilteredProperties(filtered);
-  // }, [searchValue, allNotes]);
-
-  // const handleSearchChange = (e) => {
-  //   setSearchValue(e.target.value);
-  // };
 
   return (
     <div className="top-bar">
