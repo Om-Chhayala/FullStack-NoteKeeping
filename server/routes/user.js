@@ -70,4 +70,25 @@ router.put('/notes/:noteId', async (req, res) => {
   });
 
 
+// router.get('/getnotedata/:noteId', async (req,res) => {
+//     try {
+//         const noteId = req.params.noteId;
+//         const notedata = await Note.findOne( {noteId} );
+//         if(!noteId) {
+//             res.json({
+//                 message : "Id not found for this noteID"
+//             })
+//         }
+//         res.json({
+//             message : "success",
+//             notedata
+//         })
+//     } catch {
+//         res.json({
+//             message : "An error occured"
+//         })
+//     }
+// })
+// https://gist.github.com/Om-Chhayala/ff890c51b725b9f120fc0a61b8751db8
+
 module.exports = router;
