@@ -9,28 +9,18 @@ import { useNavigate } from 'react-router-dom';
 
 
 const modules = {
-  toolbar : [
-    [{ header : [1 , 2 ,3  , 4 , 5 , 6 , false],}],
-    [{font : []}],
-    [{size : []}],
-    ["bold" , "underline" , "italic" , "strike" , "blockquote"],
-    [{ 'color': [ "red" , "yellow"] }], // Text color
-      [{ 'background': [] }], // Background color
-    [
-      {list : "ordered"},
-      {list : "bullet"},
-      {indent : "-1"},
-      {list : "+1"},
-    ],
-    ["link" , "video" , "image"],
-  ]
-}
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ align: [] }],
+    [{ color: ['red' , 'yellow' , 'green' , 'blue'] }, { background: ['red' , 'yellow' , 'green' , 'blue'] }],
+    ['link'],
+    ['image', 'video'],
+    ['clean'],
+  ],
+};
 
-const formats = [
-  'bold', 'italic', 'underline', 'strike',
-  'color',
-  'background',
-];
 
 export const CreateNote = () => {
   const navigate = useNavigate();
@@ -41,18 +31,18 @@ export const CreateNote = () => {
   const [link, setLink] = useState('');
 
 
-  const stripHTML = (html) => {
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
-    return tempDiv.textContent || tempDiv.innerText || '';
-  };
+  // const stripHTML = (html) => {
+  //   const tempDiv = document.createElement('div');
+  //   tempDiv.innerHTML = html;
+  //   return tempDiv.textContent || tempDiv.innerText || '';
+  // };
 
-  const handleEditorChange = (content) => {
-    // Strip HTML tags from the content
-    const plainText = JSON.stringify(content);
-    console.log(plainText)
-    setDescription(plainText);
-  };
+  // const handleEditorChange = (content) => {
+  //   // Strip HTML tags from the content
+  //   const plainText = JSON.stringify(content);
+  //   console.log(plainText)
+  //   setDescription(plainText);
+  // };
 
 
 
@@ -76,12 +66,11 @@ export const CreateNote = () => {
   <ReactQuill
   theme='snow'
   value={description}
-  // onChange={setDescription}
   onChange={(e)=>{
     setDescription(e).target.value;
   }}
   modules={modules}
-  formats={formats}
+  // formats={formats}
   />
 
 
