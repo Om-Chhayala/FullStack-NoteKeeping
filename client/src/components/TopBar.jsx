@@ -1,13 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../styles/topbar.css';
 
 export const TopBar = ({ onSearchChange }) => {
   const [searchValue, setSearchValue] = useState('');
+  const [selectedSortOption, setSelectedSortOption] = useState('oldest');
+  const handleSortChange = (e) => {
+    const selectedOption = e.target.value;
+    setSelectedSortOption(selectedOption);
+
+    // Send the selectedSortOption to the backend as a query parameter
+    axios.get('http://localhost:8000/user/allnote', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      params: { sortOrder: selectedOption },
+    })
+    .then(response => {
+      // Handle the response from the backend
+    })
+    .catch(error => {
+      console.error('Error sending sorting option:', error);
+    });
+  };
 
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchValue(query);
-    onSearchChange(query); // Pass the search query to the parent component
+    onSearchChange(query);
   };
 
   return (
@@ -24,8 +44,7 @@ export const TopBar = ({ onSearchChange }) => {
         />
       </div>
       <div className="filter">
-        <label>Sort by:</label>
-        <select>
+        <select value={selectedSortOption} onChange={handleSortChange}>
           <option value="recent">Most Recent</option>
           <option value="oldest">Oldest</option>
         </select>

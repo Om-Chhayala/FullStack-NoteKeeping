@@ -1,4 +1,4 @@
-import React, { useState , useRef, useMemo} from 'react';
+import React, { useState , useRef, useMemo, useEffect} from 'react';
 import { Typography, TextField, Button } from "@mui/material";
 import "../styles/createnote.css";
 import ReactQuill from 'react-quill';
@@ -22,7 +22,7 @@ const modules = {
 };
 
 
-export const CreateNote = () => {
+export const CreateNote =   () => {
   const navigate = useNavigate();
   const[value , setValue] = useState('');
  const editor = useRef(null);

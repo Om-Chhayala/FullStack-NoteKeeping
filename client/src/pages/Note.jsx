@@ -1,36 +1,54 @@
-import React, { useState , useRef} from 'react';
-import {  TextField, Button } from "@mui/material";
-import "../styles/createnote.css";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
+import React, { useState, useEffect } from 'react';
+import { TextField, Button } from "@mui/material";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify'; // Import DOMPurify
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill editor's styles
 
 
 export const Note = () => {
-  let { noteId } = useParams();
-  console.log(noteId);
+  const { noteId } = useParams(); // Define noteId only once
+
+  const [data, setData] = useState({});
+
+  const sanitizeHTML = (html) => {
+    const cleanHTML = DOMPurify.sanitize(html);
+    return { __html: cleanHTML };
+  };
+
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
 
-
-  const modules = {
-    toolbar: [
-      [{ header: '1' }, { header: '2' }, { font: [] }],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ align: [] }],
-      [{ color: ['red' , 'yellow' , 'green' , 'blue'] }, { background: ['red' , 'yellow' , 'green' , 'blue'] }],
-      ['link'],
-      ['image', 'video'],
-      ['clean'],
-    ],
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/user/getnotedata/${noteId}`, {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      });
+      const noteData = response.data.notedata;
+      setTitle(noteData.title);
+      setDescription(noteData.description);
+      setLink(noteData.links);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  return ( 
-  <div className="create-note">
+  useEffect(() => {
+    fetchData();
+  }, [noteId]);
+
+  const modules = {
+    // ... your modules configuration
+  };
+
+  return (
+    <div className="create-note">
       <div className="note-input">
         <TextField
           value={title}
@@ -44,16 +62,14 @@ export const Note = () => {
         />
       </div>
       <div className="note-input">
-
-  <ReactQuill
-  theme='snow'
-  value={description}
-  onChange={(e)=>{
-    setDescription(e).target.value;
-  }}
-  modules={modules}
-  />
-
+        <ReactQuill
+          theme='snow'
+          value={description}
+          onChange={(value) => {
+            setDescription(value);
+          }}
+          modules={modules}
+        />
       </div>
       <div className="note-input">
         <TextField
@@ -62,30 +78,28 @@ export const Note = () => {
             setLink(event.target.value);
           }}
           id="outlined-textarea"
-          // for exp
           placeholder="Write link"
           multiline
           fullWidth
         />
       </div>
-
       <Button
-      onClick={async () => {
-        await axios.put(`http://localhost:8000/user/notes/${noteId}`, {
-                title: title,
-                description: description,
-                link : link
-        }, {
+        onClick={async () => {
+          await axios.put(`http://localhost:8000/user/notes/${noteId}`, {
+            title: title,
+            description: description,
+            link: link
+          }, {
             headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+              "Authorization": "Bearer " + localStorage.getItem("token")
             }
-        });
-        alert("Note updated!");
-        navigate('/');
-    }}
-      > Submit </Button>
+          });
+          alert("Note updated!");
+          navigate('/');
+        }}
+      >
+        Submit
+      </Button>
     </div>
   );
 };
-
-// export default CreateNote;
