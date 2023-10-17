@@ -9,7 +9,6 @@ const router = express.Router();
 
 router.post('/addnote', authenticateJwt , async (req,res) => {
     const userid = req.user.id;
-    console.log(userid);
 
     const newnote = new Note({
         userid : req.user.id,
@@ -27,7 +26,6 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
 router.get('/allnote', authenticateJwt, async (req, res) => {
     try {
         const sortOrder = req.query.sortOrder;
-        console.log(sortOrder);
         let sortDirection = -1; // Default to descending order (most recent)
 
         if (sortOrder === 'oldest') {
