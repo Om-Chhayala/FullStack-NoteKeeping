@@ -20,12 +20,10 @@ export const TopBar = () => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchValue(query);
-    // Call filterNotes to update the filteredNotes state
     setFilteredNotes(filterNotes(notes, query, selectedSortOption));
   };
 
   const filterNotes = (allNotes, query, sortOrder) => {
-    // Filter notes based on title and sort order
     let filteredNotes = [...allNotes];
 
     if (query) {
