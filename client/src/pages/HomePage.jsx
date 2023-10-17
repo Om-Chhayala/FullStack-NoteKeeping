@@ -37,7 +37,7 @@ export function HomePage() {
   return (
         <>
        <TopBar onSearchChange={handleSearchChange} />
-      <Notes searchQuery={searchQuery} />
+      {/* <Notes searchQuery={searchQuery} /> */}
           <div className="homepage">
             {isUserLoggedIn ? (  // Conditional rendering of the "+" button
               <button

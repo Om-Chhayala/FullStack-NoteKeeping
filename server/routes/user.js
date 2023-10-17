@@ -26,7 +26,7 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
 
 router.get('/allnote', authenticateJwt, async (req, res) => {
     try {
-        const sortOrder = req.query.sortOrder || "recent";
+        const sortOrder = req.query.sortOrder;
         console.log(sortOrder);
         let sortDirection = -1; // Default to descending order (most recent)
 
