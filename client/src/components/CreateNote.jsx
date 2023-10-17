@@ -1,4 +1,4 @@
-import React, { useState , useRef, useMemo} from 'react';
+import React, { useState , useRef, useMemo, useEffect} from 'react';
 import { Typography, TextField, Button } from "@mui/material";
 import "../styles/createnote.css";
 import ReactQuill from 'react-quill';
@@ -81,19 +81,7 @@ export const CreateNote = () => {
       </div>
 
       <Button
-    //   onClick={async () => {
-    //     await axios.post('http://localhost:8000/user/addnote', {
-    //             title: title,
-    //             description: description,
-    //             link : link
-    //     }, {
-    //         headers: {
-    //             "Authorization": "Bearer " + localStorage.getItem("token")
-    //         }
-    //     });
-    //     alert("Note added!");
-    //     navigate('/');
-    // }}
+
     onClick={handleNoteSubmit}
       > Submit </Button>
     </div>

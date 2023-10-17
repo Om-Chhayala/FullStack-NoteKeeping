@@ -13,6 +13,9 @@ import {
   FETCH_NOTE_REQUEST,
   FETCH_NOTE_SUCCESS,
   FETCH_NOTE_FAIL,
+  NOTE_DELETE_REQUEST,
+  NOTE_DELETE_SUCCESS,
+  NOTE_DELETE_FAIL,
 } from "../constants/noteConstants";
 
 export const addNote = (title, description, link) => async (dispatch) => {
@@ -118,6 +121,30 @@ export const fetchNote = (noteId) => async (dispatch) => {
   }
 };
 
+export const deleteNote = (noteId) => async (dispatch) => {
+  try {
+    dispatch({ type: NOTE_DELETE_REQUEST });
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+
+    const response = await axios.delete(
+      `http://localhost:8000/user/deletenote/${noteId}`,
+      { headers }
+    );
+
+    dispatch({ type: NOTE_DELETE_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({
+      type: NOTE_DELETE_FAIL,
+      payload: error.response
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
 
 
 

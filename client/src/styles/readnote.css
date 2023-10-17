@@ -23,6 +23,8 @@
     align-items: center;
     text-align: center; /* Center the text horizontally */
     transition: transform 0.2s ease-in-out;
+    justify-content: center;
+    align-items: center;
   }
   
   .title {

@@ -25,12 +25,54 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
 });
 
 router.get('/allnote', authenticateJwt, async (req, res) => {
-    const allnotes = await Note.find({ userid : req.user.id });
-    res.status(200).json({ 
-        message : 'all message retrive successfully',
-        allnotes
-    });
+    try {
+        const sortOrder = req.query.sortOrder;
+        console.log(sortOrder);
+        let sortDirection = -1; // Default to descending order (most recent)
+
+        if (sortOrder === 'oldest') {
+            sortDirection = 1; // Change to ascending order (oldest)
+        }
+
+        const allnotes = await Note.find({ userid: req.user.id }).sort({ createdAt: sortDirection }).exec();
+
+        res.status(200).json({ 
+            message: 'All notes retrieved successfully',
+            allnotes
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while retrieving notes.' });
+    }
 });
+
+
+// router.get('/allnote', authenticateJwt, async (req, res) => {
+//     const sortOrder = req.query.sortOrder || 'recent';
+//     console.log(sortOrder);
+
+//     // const sortingorder;
+//     // if(sortOrder==='recent'){
+//     //     sortingorder = 1
+//     // }
+//     // else{
+//     //     sortingorder = -1;
+//     // }
+  
+//     let sortOptions = {};
+//     sortOptions['createdAt'] = sortOrder === 'recent' ? 1 : -1;
+  
+//     try {
+//       const allnotes = await Note.find({ userid: req.user.id }).sort(sortOptions).exec();
+  
+//       res.status(200).json({ 
+//         message: 'All notes retrieved successfully',
+//         allnotes
+//       });
+//     } catch (error) {
+//       res.status(500).json({ error: 'An error occurred while retrieving notes.' });
+//     }
+//   });
+
 
 router.delete('/deletenote/:noteId', authenticateJwt, async (req,res) => {
     const noteId = req.params.noteId;

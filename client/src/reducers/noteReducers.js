@@ -12,6 +12,9 @@ import {
   FETCH_NOTE_REQUEST,
   FETCH_NOTE_SUCCESS,
   FETCH_NOTE_FAIL,
+  NOTE_DELETE_REQUEST,
+  NOTE_DELETE_SUCCESS,
+  NOTE_DELETE_FAIL,
 } from "../constants/noteConstants";
 
 const initialState = {
@@ -21,6 +24,8 @@ const initialState = {
   error: null,
   updating: false,
   note: null,
+  deleting: false,
+  deleteError: null,
 };
 
 const noteReducer = (state = initialState, action) => {
@@ -49,6 +54,13 @@ const noteReducer = (state = initialState, action) => {
           return { ...state, loading: false, note: action.payload, error: null };
         case FETCH_NOTE_FAIL:
           return { ...state, loading: false, note: null, error: action.payload };
+
+          case NOTE_DELETE_REQUEST:
+            return { ...state, deleting: true };
+          case NOTE_DELETE_SUCCESS:
+            return { ...state, deleting: false };
+          case NOTE_DELETE_FAIL:
+            return { ...state, deleting: false, deleteError: action.payload };
     default:
       return state;
   }
