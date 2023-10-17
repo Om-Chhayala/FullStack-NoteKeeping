@@ -5,7 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify'; // Import DOMPurify
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the Quill editor's styles
-
+// import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
+import { updateNote } from '../actions/noteActions'; 
 
 export const Note = () => {
   const { noteId } = useParams(); // Define noteId only once
@@ -22,6 +24,7 @@ export const Note = () => {
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
 
+  const dispatch = useDispatch();
   const fetchData = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/user/getnotedata/${noteId}`, {
@@ -45,6 +48,12 @@ export const Note = () => {
 
   const modules = {
     // ... your modules configuration
+  };
+
+    const handleUpdateNote = () => {
+    dispatch(updateNote(noteId, title, description, link));
+    alert('Note updated!');
+    navigate('/');
   };
 
   return (
@@ -84,19 +93,8 @@ export const Note = () => {
         />
       </div>
       <Button
-        onClick={async () => {
-          await axios.put(`http://localhost:8000/user/notes/${noteId}`, {
-            title: title,
-            description: description,
-            link: link
-          }, {
-            headers: {
-              "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-          });
-          alert("Note updated!");
-          navigate('/');
-        }}
+
+        onClick={handleUpdateNote}
       >
         Submit
       </Button>

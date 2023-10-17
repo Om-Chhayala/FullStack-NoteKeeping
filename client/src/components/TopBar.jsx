@@ -33,8 +33,6 @@ export const TopBar = () => {
         note.title.toLowerCase().includes(query.toLowerCase())
       );
     }
-
-    // Sort filteredNotes
     if (sortOrder === 'oldest') {
       filteredNotes.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     } else {
@@ -56,7 +54,7 @@ export const TopBar = () => {
       if (response.status === 200) {
         const allNotes = response.data.allnotes;
         setNotes(allNotes);
-        // Initialize filteredNotes
+
         setFilteredNotes(filterNotes(allNotes, searchValue, selectedSortOption));
       } else {
         console.error('API request was not successful. Status:', response.status);
@@ -125,8 +123,6 @@ export const TopBar = () => {
 function Note({ note, onDelete }) {
   const sanitizedContent = DOMPurify.sanitize(note.description);
   const navigate = useNavigate();
-
-  // Define the handleDelete function to handle delete operations
   const handleDelete = async () => {
     try {
       const noteId = note._id;
