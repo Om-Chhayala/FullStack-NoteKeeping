@@ -26,7 +26,6 @@ export const CreateNote = () => {
 
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
-  const[value , setValue] = useState('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
@@ -61,7 +60,6 @@ export const CreateNote = () => {
     setDescription(e).target.value;
   }}
   modules={modules}
-  // formats={formats}
   />
 
 

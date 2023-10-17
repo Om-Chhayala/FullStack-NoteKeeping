@@ -54,7 +54,7 @@ export const TopBar = () => {
       if (response.status === 200) {
         const allNotes = response.data.allnotes;
         setNotes(allNotes);
-        // Initialize filteredNotes
+
         setFilteredNotes(filterNotes(allNotes, searchValue, selectedSortOption));
       } else {
         console.error('API request was not successful. Status:', response.status);
@@ -123,8 +123,6 @@ export const TopBar = () => {
 function Note({ note, onDelete }) {
   const sanitizedContent = DOMPurify.sanitize(note.description);
   const navigate = useNavigate();
-
-  // Define the handleDelete function to handle delete operations
   const handleDelete = async () => {
     try {
       const noteId = note._id;

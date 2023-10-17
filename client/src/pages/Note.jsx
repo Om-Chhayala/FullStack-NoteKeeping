@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button } from "@mui/material";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import DOMPurify from 'dompurify'; // Import DOMPurify
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the Quill editor's styles
+// import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
 import { updateNote } from '../actions/noteActions'; 
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 export const Note = () => {
   const { noteId } = useParams(); // Define noteId only once
@@ -23,28 +25,39 @@ export const Note = () => {
   const [link, setLink] = useState('');
 
   const dispatch = useDispatch();
-
-  const modules = {
-    toolbar: [
-      [{ header: '1' }, { header: '2' }, { font: [] }],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ align: [] }],
-      [{ color: ['red' , 'yellow' , 'green' , 'blue'] }, { background: ['red' , 'yellow' , 'green' , 'blue'] }],
-      ['link'],
-      ['image', 'video'],
-      ['clean'],
-    ],
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/user/getnotedata/${noteId}`, {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+      });
+      const noteData = response.data.notedata;
+      setTitle(noteData.title);
+      setDescription(noteData.description);
+      setLink(noteData.links);
+      setData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
-  const handleUpdateNote = () => {
+  useEffect(() => {
+    fetchData();
+  }, [noteId]);
+
+  const modules = {
+    // ... your modules configuration
+  };
+
+    const handleUpdateNote = () => {
     dispatch(updateNote(noteId, title, description, link));
     alert('Note updated!');
     navigate('/');
   };
 
-  return ( 
-  <div className="create-note">
+  return (
+    <div className="create-note">
       <div className="note-input">
         <TextField
           value={title}
@@ -80,9 +93,11 @@ export const Note = () => {
         />
       </div>
       <Button
-      onClick={handleUpdateNote}
-      > Submit </Button>
+
+        onClick={handleUpdateNote}
+      >
+        Submit
+      </Button>
     </div>
   );
 };
-
