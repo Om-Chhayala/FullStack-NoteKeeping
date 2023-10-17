@@ -5,28 +5,20 @@ import axios from 'axios';
 import '../styles/homepage.css';
 import Notes from './Notes';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getNotes } from '../actions/noteActions';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const [notes, setNotes] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
+  const [searchQuery, setSearchQuery] = useState(''); 
+
+  const notesState = useSelector((state) => state.notes);
+  const { loading, notes, error } = notesState;
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    async function fetchNotes() {
-      try {
-        const response = await axios.get('http://localhost:8000/user/allnote', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
-        setNotes(response.data.allnotes);
-      } catch (error) {
-        console.error('Error fetching notes:', error);
-      }
-    }
-
-    fetchNotes();
-  }, []);
+    dispatch(getNotes());
+  }, [dispatch]);
 
   const isUserLoggedIn = localStorage.getItem('token');
 

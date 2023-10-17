@@ -1,17 +1,36 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@mui/material/Button';
 import TextField from "@mui/material/TextField";
 import {Card, Typography} from "@mui/material";
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
-
+import {useDispatch, useSelector} from 'react-redux'
+import { login } from '../actions/userActions';
 
 export const Login = () => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+
     const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const userLogin = useSelector((state) => state.userLogin);
+    const { loading, error, token } = userLogin;
+  
+    useEffect(() => {
+      if(token) {
+        navigate('/');
+      }
+    }, [token ,navigate]);
+
+      const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+  
+    const SubmitHandler = async (e) => {
+      e.preventDefault();
+      dispatch(login(email, password));
+    }
+  
+  
 
     return <div>
             <div style={{
@@ -50,21 +69,7 @@ export const Login = () => {
                 <Button
                     size={"large"}
                     variant="contained"
-                    onClick={async () => {
-                        const res = await axios.post( 'http://localhost:8000/auth/login', {
-                            email: email,
-                            password: password
-                        }, {
-                            headers: {
-                                "Content-type": "application/json"
-                            }
-                        });
-                        const data = res.data;
-
-                        localStorage.setItem("token", data.token);
-                        navigate('/');
-                    }}
-
+                    onClick={SubmitHandler}
                 > Signin</Button>
             </Card>
         </div>

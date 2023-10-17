@@ -5,6 +5,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; 
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'; // Import useSelector and useDispatch
+import { updateNote } from '../actions/noteActions'; 
 
 
 export const Note = () => {
@@ -15,6 +17,7 @@ export const Note = () => {
   const [description, setDescription] = useState('');
   const [link, setLink] = useState('');
 
+  const dispatch = useDispatch();
 
   const modules = {
     toolbar: [
@@ -27,6 +30,12 @@ export const Note = () => {
       ['image', 'video'],
       ['clean'],
     ],
+  };
+
+  const handleUpdateNote = () => {
+    dispatch(updateNote(noteId, title, description, link));
+    alert('Note updated!');
+    navigate('/');
   };
 
   return ( 
@@ -62,7 +71,6 @@ export const Note = () => {
             setLink(event.target.value);
           }}
           id="outlined-textarea"
-          // for exp
           placeholder="Write link"
           multiline
           fullWidth
@@ -70,22 +78,9 @@ export const Note = () => {
       </div>
 
       <Button
-      onClick={async () => {
-        await axios.put(`http://localhost:8000/user/notes/${noteId}`, {
-                title: title,
-                description: description,
-                link : link
-        }, {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-        });
-        alert("Note updated!");
-        navigate('/');
-    }}
+      onClick={handleUpdateNote}
       > Submit </Button>
     </div>
   );
 };
 
-// export default CreateNote;

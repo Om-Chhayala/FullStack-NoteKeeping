@@ -3,11 +3,32 @@ import TextField from "@mui/material/TextField";
 import {Card, Typography} from "@mui/material";
 import {useState} from "react";
 import axios from "axios";
+import {useDispatch, useSelector} from 'react-redux'
+import { signup } from '../actions/userActions';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
-    const [username , setUsername] = useState('');
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userSignup = useSelector((state) => state.userSignup);
+    const { loading, error, token } = userSignup;
+  
+    useEffect(() => {
+      if (token) {
+        navigate('/');
+      }
+    }, [token , navigate]);
+
+      const [username , setUsername] = useState('');
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const SubmitHandler = async (e) => {
+      e.preventDefault();
+      dispatch(signup(username, email, password));
+    }
+
 
 
     return <div>
@@ -56,15 +77,16 @@ function Signup() {
                 <Button
                     size={"large"}
                     variant="contained"
-                    onClick={async() => {
-                        const response = await axios.post(' http://localhost:8000/auth/signup', {
-                            username: username,
-                            email : email,
-                            password: password
-                        })
-                        let data = response.data;
-                        localStorage.setItem("token", data.token);
-                    }}
+                    onClick={SubmitHandler}
+                    // onClick={async() => {
+                    //     const response = await axios.post(' http://localhost:8000/auth/signup', {
+                    //         username: username,
+                    //         email : email,
+                    //         password: password
+                    //     })
+                    //     let data = response.data;
+                    //     localStorage.setItem("token", data.token);
+                    // }}
                 > Signup</Button>
             </Card>
         </div>

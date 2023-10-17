@@ -7,7 +7,7 @@ import DOMPurify from 'dompurify';
 export default function Notes({ searchQuery }) {
   const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
-  const [filteredNotes, setFilteredNotes] = useState([]); // Initialize filteredNotes state
+  const [filteredNotes, setFilteredNotes] = useState([]); 
 
   const init = async () => {
     try {
@@ -31,7 +31,6 @@ export default function Notes({ searchQuery }) {
 
   const deleteNote = (noteId) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
-    // Also update the filteredNotes array
     setFilteredNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
   }
 
@@ -50,7 +49,6 @@ export default function Notes({ searchQuery }) {
   }, []);
 
   useEffect(() => {
-    // Update filteredNotes when searchQuery changes
     setFilteredNotes(filterNotes());
   }, [searchQuery]);
 
