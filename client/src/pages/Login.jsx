@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
-import TextField from "@mui/material/TextField";
-import {Card, Typography} from "@mui/material";
-import {useState} from "react";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from 'react-redux'
+import TextField from '@mui/material/TextField';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Login = () => {
@@ -22,15 +21,10 @@ export const Login = () => {
       }
     }, [token ,navigate]);
 
-      const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-  
-    const SubmitHandler = async (e) => {
-      e.preventDefault();
-      dispatch(login(email, password));
-    }
-  
-  
+  // Check if the user is logged in and navigate accordingly
+  if (token) {
+    navigate('/');
+  }
 
     return <div>
             <div style={{
@@ -79,4 +73,5 @@ export const Login = () => {
             </Card>
         </div>
     </div>
-}
+  );
+};
