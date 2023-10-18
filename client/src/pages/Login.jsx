@@ -99,6 +99,10 @@ export const Login = () => {
     dispatch(login(email, password));
   };
 
+  const handleSignUpClick = () => {
+    navigate('/signup'); // Redirect to the sign-up page
+  };
+
   useEffect(() => {
     if (token) {
       console.log("Token is available");
@@ -110,7 +114,12 @@ export const Login = () => {
     <div>
       <div style={{ paddingTop: 150, marginBottom: 10, display: "flex", justifyContent: "center" }}>
         <Typography variant="h6">
-          Welcome to Note Taking App
+          Welcome to Note Taking App.
+        </Typography>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Typography variant="h6">
+          Don't have an account? Sign up below.
         </Typography>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
@@ -131,13 +140,23 @@ export const Login = () => {
           />
           <br /><br />
 
-          <Button
-            size="large"
-            variant="contained"
-            onClick={handleSubmit}
-          >
-            Sign in
-          </Button>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Button
+              size="large"
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              Sign in
+            </Button>
+
+            <Button
+              size="large"
+              variant="contained"
+              onClick={handleSignUpClick}
+            >
+              Sign Up
+            </Button>
+          </div>
 
           {error && (
             <div style={{ color: 'red', marginTop: '10px' }}>
