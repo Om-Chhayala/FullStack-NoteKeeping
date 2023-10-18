@@ -82,15 +82,17 @@ export const CreateNote = () => {
                             key={index}
                             style={{
                                 backgroundColor: color,
-                                width: "auto",
-                                height: "auto",
+                                width: "50px",
+                                height: "35px",
                                 margin: "5px",
                                 cursor: "pointer",
-                                padding: "5px"
+                                padding: "5px",
+                                borderRadius: "50%",
+                                borderStyle: "none"
                             }}
                             onClick={() => handleColorSelect(color)}
                         >
-                            {color}
+
                         </button>
                     ))}
                 </div>
