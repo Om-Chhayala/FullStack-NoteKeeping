@@ -30,9 +30,16 @@ export const CreateNote = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [link, setLink] = useState("");
+    const [selectedColor, setSelectedColor] = useState(null);
+    const colorOptions = ["#D0D4CA", "#FF8080", "#B0D9B1", "#F1C27B"];
+
+    const handleColorSelect = (color) => {
+        setSelectedColor(color);
+    };
+
 
     const handleNoteSubmit = async () => {
-        dispatch(addNote(title, description, link));
+        dispatch(addNote(title, description, link, selectedColor));
         alert("Note Created!!");
         navigate("/");
     };
@@ -67,6 +74,26 @@ export const CreateNote = () => {
             </div>
             <div id="file-input" className="note-input">
                 <input type="file" onChange={handleVideoUpload}/>
+            </div>
+            <div>
+                <div>
+                    {colorOptions.map((color, index) => (
+                        <button
+                            key={index}
+                            style={{
+                                backgroundColor: color,
+                                width: "auto",
+                                height: "auto",
+                                margin: "5px",
+                                cursor: "pointer",
+                                padding: "5px"
+                            }}
+                            onClick={() => handleColorSelect(color)}
+                        >
+                            {color}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <Button onClick={handleNoteSubmit}> Submit </Button>

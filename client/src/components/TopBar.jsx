@@ -152,6 +152,7 @@ function Note({ note, onDelete }) {
         border: '1px solid #d0d0d0',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
         borderRadius: 10,
+          backgroundColor: note.color,
       }}
     >
       <Typography textAlign={'center'} variant="h5" style={{ fontSize: 18, fontWeight: 'bold' }}>
