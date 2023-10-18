@@ -9,7 +9,7 @@ const userschema = new mongoose.Schema({
 const noteschema = new mongoose.Schema({
     userid : String,
     title : String,
-    links:[String],
+    link:String,
     description:String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

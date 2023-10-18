@@ -35,8 +35,9 @@ export const Note = () => {
       const noteData = response.data.notedata;
       setTitle(noteData.title);
       setDescription(noteData.description);
-      setLink(noteData.links);
+      setLink(noteData.link);
       setData(response.data);
+      console.log(noteData.link);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
