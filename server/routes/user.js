@@ -6,31 +6,6 @@ const { SECRET } = require("../middleware")
 const { authenticateJwt } = require("../middleware");
 
 const router = express.Router();
-// router.post('/addnote', authenticateJwt, async (req, res) => {
-//     const userId = req.user.id;
-  
-//     const newNote = new Note({
-//       userId: userId,
-//       title: req.body.title,
-//       links: req.body.links,
-//       description: req.body.description,
-//       color: req.body.color, // Include the color property from the request body
-//     });
-  
-//     try {
-//       await newNote.save();
-  
-//       res.json({
-//         message: 'Note added successfully',
-//         newNote,
-//       });
-//     } catch (error) {
-//       res.status(500).json({
-//         message: 'Failed to add note',
-//         error: error.message,
-//       });
-//     }
-//   });
 router.post('/addnote', authenticateJwt , async (req,res) => {
     const userid = req.user.id;
 
@@ -38,7 +13,8 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
         userid : req.user.id,
         title : req.body.title,
         link : req.body.link,
-        description : req.body.description
+        description : req.body.description,
+        color : req.body.selectedColor,
     });
     await newnote.save();
     res.json({
@@ -126,28 +102,5 @@ router.put('/notes/:noteId', async (req, res) => {
         });
     }
 });
-
-
-router.post('/setnotecolor', async (req, res) => {
-    try {
-      const { noteId, color } = req.body;
-  
-      // Update the note color in your database (replace with your data storage logic).
-      const updatedNote = await Note.findByIdAndUpdate(
-        noteId,
-        { color: color },
-        { new: true } // Return the updated note
-      );
-  
-      if (!updatedNote) {
-        return res.status(404).json({ error: 'Note not found' });
-      }
-      res.status(200).json({ message: 'Note color updated successfully', updatedNote });
-    } catch (error) {
-      console.error('Error updating note color:', error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
-// https://gist.github.com/Om-Chhayala/ff890c51b725b9f120fc0a61b8751db8
 
 module.exports = router;

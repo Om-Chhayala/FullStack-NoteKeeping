@@ -12,7 +12,7 @@ import {
 
 } from "../constants/noteConstants";
 
-export const addNote = (title, description, link) => async (dispatch) => {
+export const addNote = (title, description, link, selectedColor) => async (dispatch) => {
   try {
     dispatch({ type: NOTE_ADD_REQUEST });
 
@@ -29,6 +29,7 @@ export const addNote = (title, description, link) => async (dispatch) => {
         title,
         description,
         link,
+        selectedColor,
       },
       config
     );
