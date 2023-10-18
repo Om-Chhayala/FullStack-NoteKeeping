@@ -37,7 +37,7 @@ router.post('/addnote', authenticateJwt , async (req,res) => {
     const newnote = new Note({
         userid : req.user.id,
         title : req.body.title,
-        links : req.body.links,
+        link : req.body.link,
         description : req.body.description
     });
     await newnote.save();
@@ -66,35 +66,6 @@ router.get('/allnote', authenticateJwt, async (req, res) => {
         res.status(500).json({ error: 'An error occurred while retrieving notes.' });
     }
 });
-
-
-// router.get('/allnote', authenticateJwt, async (req, res) => {
-//     const sortOrder = req.query.sortOrder || 'recent';
-//     console.log(sortOrder);
-
-//     // const sortingorder;
-//     // if(sortOrder==='recent'){
-//     //     sortingorder = 1
-//     // }
-//     // else{
-//     //     sortingorder = -1;
-//     // }
-  
-//     let sortOptions = {};
-//     sortOptions['createdAt'] = sortOrder === 'recent' ? 1 : -1;
-  
-//     try {
-//       const allnotes = await Note.find({ userid: req.user.id }).sort(sortOptions).exec();
-  
-//       res.status(200).json({ 
-//         message: 'All notes retrieved successfully',
-//         allnotes
-//       });
-//     } catch (error) {
-//       res.status(500).json({ error: 'An error occurred while retrieving notes.' });
-//     }
-//   });
-
 
 router.delete('/deletenote/:noteId', authenticateJwt, async (req,res) => {
     const noteId = req.params.noteId;
@@ -133,26 +104,29 @@ router.put('/notes/:noteId', async (req, res) => {
     }
   });
 
-
-router.get('/getnotedata/:noteId', async (req,res) => {
+  router.get('/getnotedata/:noteId', async (req, res) => {
     try {
         const noteId = req.params.noteId;
-        const notedata = await Note.findOne( {_id : noteId} );
-        if(!noteId) {
-            res.json({
-                message : "Id not found for this noteID"
-            })
+        const notedata = await Note.findOne({ _id: noteId });
+
+        if (!notedata) {
+            return res.json({
+                message: "Note not found for this noteID",
+            });
         }
+
         res.json({
-            message : "success",
-            notedata
-        })
-    } catch {
+            message: "success",
+            notedata,
+        });
+    } catch (error) {
+        console.error('An error occurred:', error);
         res.json({
-            message : "An error occured"
-        })
+            message: "An error occurred",
+        });
     }
-})
+});
+
 
 router.post('/setnotecolor', async (req, res) => {
     try {

@@ -35,8 +35,9 @@ export const Note = () => {
       const noteData = response.data.notedata;
       setTitle(noteData.title);
       setDescription(noteData.description);
-      setLink(noteData.links);
+      setLink(noteData.link);
       setData(response.data);
+      console.log(noteData.link);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -48,6 +49,10 @@ export const Note = () => {
 
   const modules = {
     // ... your modules configuration
+  };
+
+  const handleVideoUpload = (event) => {
+    setLink(URL.createObjectURL(event.target.files[0]));
   };
 
     const handleUpdateNote = () => {
@@ -81,16 +86,7 @@ export const Note = () => {
         />
       </div>
       <div className="note-input">
-        <TextField
-          value={link}
-          onChange={(event) => {
-            setLink(event.target.value);
-          }}
-          id="outlined-textarea"
-          placeholder="Write link"
-          multiline
-          fullWidth
-        />
+        <input type="file" onChange={handleVideoUpload}/>
       </div>
       <Button
 

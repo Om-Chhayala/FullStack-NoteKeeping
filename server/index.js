@@ -17,5 +17,3 @@ app.listen(port, () => {
 });
 
 mongoose.connect('mongodb+srv://aalok2:1234@cluster0.89mnes1.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: "NoteTaking-Db" });
-
-
