@@ -104,26 +104,29 @@ router.put('/notes/:noteId', async (req, res) => {
     }
   });
 
-
-router.get('/getnotedata/:noteId', async (req,res) => {
+  router.get('/getnotedata/:noteId', async (req, res) => {
     try {
         const noteId = req.params.noteId;
-        const notedata = await Note.findOne( {_id : noteId} );
-        if(!noteId) {
-            res.json({
-                message : "Id not found for this noteID"
-            })
+        const notedata = await Note.findOne({ _id: noteId });
+
+        if (!notedata) {
+            return res.json({
+                message: "Note not found for this noteID",
+            });
         }
+
         res.json({
-            message : "success",
-            notedata
-        })
-    } catch {
+            message: "success",
+            notedata,
+        });
+    } catch (error) {
+        console.error('An error occurred:', error);
         res.json({
-            message : "An error occured"
-        })
+            message: "An error occurred",
+        });
     }
-})
+});
+
 
 router.post('/setnotecolor', async (req, res) => {
     try {

@@ -1,18 +1,18 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { TopBar } from '../components/TopBar';
 import '../styles/homepage.css';
 import { useNavigate } from 'react-router-dom';
+import ReactPlayer from "react-player";
 
 
 export function HomePage() {
   const navigate = useNavigate();
   const isUserLoggedIn = localStorage.getItem('token');
 
-
   return (
         <>
        <TopBar />
-      {/* <Notes searchQuery={searchQuery} /> */}
+
           <div className="homepage">
             {isUserLoggedIn ? (  // Conditional rendering of the "+" button
               <button

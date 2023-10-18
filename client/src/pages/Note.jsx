@@ -51,6 +51,10 @@ export const Note = () => {
     // ... your modules configuration
   };
 
+  const handleVideoUpload = (event) => {
+    setLink(URL.createObjectURL(event.target.files[0]));
+  };
+
     const handleUpdateNote = () => {
     dispatch(updateNote(noteId, title, description, link));
     alert('Note updated!');
@@ -82,16 +86,7 @@ export const Note = () => {
         />
       </div>
       <div className="note-input">
-        <TextField
-          value={link}
-          onChange={(event) => {
-            setLink(event.target.value);
-          }}
-          id="outlined-textarea"
-          placeholder="Write link"
-          multiline
-          fullWidth
-        />
+        <input type="file" onChange={handleVideoUpload}/>
       </div>
       <Button
 
