@@ -1,0 +1,30 @@
+.color-palette-modal {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .color-option {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  
+  .color-option.selected {
+    border: 2px solid #000;
+  }
+  
+  .close-button {
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .close-button:hover {
+    background-color: #333;
+  }
+  

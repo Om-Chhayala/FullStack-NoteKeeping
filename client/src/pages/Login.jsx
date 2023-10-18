@@ -8,9 +8,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from 'react-redux'
 import { login } from '../actions/userActions';
 
+
 export const Login = () => {
-
-
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin);
@@ -18,6 +17,7 @@ export const Login = () => {
   
     useEffect(() => {
       if(token) {
+        console.log("token is there");
         navigate('/');
       }
     }, [token ,navigate]);
@@ -71,6 +71,11 @@ export const Login = () => {
                     variant="contained"
                     onClick={SubmitHandler}
                 > Signin</Button>
+                          {error && (
+            <div style={{ color: 'red', marginTop: '10px' }}>
+              Invalid credentials. Please check your email and password.
+            </div>
+          )}
             </Card>
         </div>
     </div>
