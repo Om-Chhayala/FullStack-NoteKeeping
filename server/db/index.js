@@ -11,6 +11,7 @@ const noteschema = new mongoose.Schema({
     title : String,
     link:String,
     description:String,
+    color: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 })

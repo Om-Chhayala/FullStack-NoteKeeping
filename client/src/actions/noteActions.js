@@ -70,9 +70,3 @@ export const updateNote = (noteId, title, description, link) => async (dispatch)
     });
   }
 };
-
-
-
-
-
-
