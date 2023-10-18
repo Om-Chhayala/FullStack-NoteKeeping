@@ -74,19 +74,10 @@ function Signup() {
                 />
                 <br/><br/>
 
-                <Button
+                <Button justifyContent= "center"
                     size={"large"}
                     variant="contained"
                     onClick={SubmitHandler}
-                    // onClick={async() => {
-                    //     const response = await axios.post(' http://localhost:8000/auth/signup', {
-                    //         username: username,
-                    //         email : email,
-                    //         password: password
-                    //     })
-                    //     let data = response.data;
-                    //     localStorage.setItem("token", data.token);
-                    // }}
                 > Signup</Button>
             </Card>
         </div>
